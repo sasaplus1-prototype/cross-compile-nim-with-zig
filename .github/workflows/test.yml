@@ -10,14 +10,14 @@ jobs:
       fail-fast: false
       matrix:
         target:
-          - x86_64-windows-gnu
-          - aarch64-windows-gnu
-          - x86_64-macos-none
-          - aarch64-macos-none
-          - x86_64-linux-gnu
-          - x86_64-linux-musl
-          - aarch64-linux-gnu
-          - aarch64-linux-musl
+          - x86_64_windows_gnu
+          - aarch64_windows_gnu
+          - x86_64_macos_none
+          - aarch64_macos_none
+          - x86_64_linux_gnu
+          - x86_64_linux_musl
+          - aarch64_linux_gnu
+          - aarch64_linux_musl
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
