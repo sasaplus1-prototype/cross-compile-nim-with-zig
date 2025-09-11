@@ -30,6 +30,35 @@ when defined(aarch64_windows_gnu):
   switch("os", "windows")
   switch("cpu", "arm64")
 
+when defined(x86_64_macos_none):
+  switch("cc", "clang")
+  switch("clang.exe", "zig cc")
+  switch("clang.linkerexe", "zig cc")
+  switch("passC", "-target x86_64-macos-none -DnoSignalHandler")
+  switch("passL", "-target x86_64-macos-none")
+  switch("define", "noSignalHandler")
+  switch("define", "nimEmulateOverflowChecks")
+  switch("dynlibOverrideAll")
+  switch("define", "useMalloc")
+  # Use a system that doesn't support dyncalls
+  switch("define", "freertos")
+  switch("os", "macos")
+  switch("cpu", "amd64")
+
+when defined(aarch64_macos_none):
+  switch("cc", "clang")
+  switch("clang.exe", "zig cc")
+  switch("clang.linkerexe", "zig cc")
+  switch("passC", "-target aarch64-macos-none -DnoSignalHandler")
+  switch("passL", "-target aarch64-macos-none")
+  switch("define", "noSignalHandler")
+  switch("define", "nimEmulateOverflowChecks")
+  switch("dynlibOverrideAll")
+  switch("define", "useMalloc")
+  # Use a system that doesn't support dyncalls
+  switch("define", "freertos")
+  switch("os", "macos")
+  switch("cpu", "arm64")
 
 when defined(x86_64_linux_gnu):
   # Native compilation on x86_64 Linux

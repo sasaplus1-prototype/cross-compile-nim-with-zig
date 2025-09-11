@@ -12,6 +12,8 @@ jobs:
         target:
           - x86_64_windows_gnu
           - aarch64_windows_gnu
+          - x86_64_macos_none
+          - aarch64_macos_none
           - x86_64_linux_gnu
           - x86_64_linux_musl
           - aarch64_linux_gnu
@@ -19,6 +21,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
+      - uses: mlugg/setup-zig@v2
       - name: Install cross-compilation tools
         run: |
           sudo apt-get update
