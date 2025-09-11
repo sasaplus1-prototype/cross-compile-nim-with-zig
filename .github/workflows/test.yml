@@ -29,7 +29,7 @@ jobs:
           parent-nim-install-directory: /opt
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - run: nimble install
-      - run: nimble build -d:${{ matrix.target }}
+      - run: nimble build -d:${{ matrix.target }} --verbose
       - run: ls -al
       - run: mv ./cross ./cross-${{ matrix.target }}
       - uses: actions/upload-artifact@v4
