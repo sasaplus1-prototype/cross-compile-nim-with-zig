@@ -11,3 +11,4 @@ namedBin["main"] = "cross"
 # Dependencies
 
 requires "nim >= 2.2.4"
+requires "zigcc"

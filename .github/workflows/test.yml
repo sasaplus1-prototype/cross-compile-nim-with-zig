@@ -1,0 +1,45 @@
+name: test
+
+on:
+  - push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        target:
+          - x86_64-windows-gnu
+          - aarch64-windows-gnu
+          - x86_64-macos-none
+          - aarch64-macos-none
+          - x86_64-linux-gnu
+          - x86_64-linux-musl
+          - aarch64-linux-gnu
+          - aarch64-linux-musl
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: mlugg/setup-zig@v2
+      - uses: jiro4989/setup-nim-action@v2
+        with:
+          nim-version: 2.2.x
+          nim-install-directory: nim
+          parent-nim-install-directory: /opt
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: nimble install
+      - run: nimble build -d:${{ matrix.target }}
+      - run: ls -al
+      - run: mv ./cross ./cross-${{ matrix.target }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cross-${{ matrix.target }}
+          path: ./cross-${{ matrix.target }}
+      - run: file ./cross-${{ matrix.target }}
+      - run: objdump -f ./cross-${{ matrix.target }} || true
+      - run: objdump -h ./cross-${{ matrix.target }} || true
+      - run: objdump -p ./cross-${{ matrix.target }} || true
+      - run: readelf -h ./cross-${{ matrix.target }} || true
+      - run: ldd ./cross-${{ matrix.target }} || true
+      - run: strings ./cross-${{ matrix.target }} | head -20 || true

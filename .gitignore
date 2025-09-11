@@ -4,3 +4,7 @@
 nimcache/
 nimblecache/
 htmldocs/
+
+### sasaplus1-prototype/cross-compile-nim-with-zig
+
+/cross
