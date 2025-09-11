@@ -22,16 +22,24 @@ when defined(aarch64_windows_gnu):
   switch("cpu", "arm64")
 
 when defined(x86_64_macos_none):
-  switch("passC", "-target x86_64-macos-none -DnoSignalHandler")
+  switch("passC", "-target x86_64-macos-none -DnoSignalHandler -DNIM_DISABLE_DYNCALLS")
   switch("passL", "-target x86_64-macos-none")
   switch("define", "noSignalHandler")
+  switch("define", "NIM_DISABLE_DYNCALLS")
+  switch("define", "useMalloc")
+  switch("dynlibOverride", "ssl")
+  switch("dynlibOverride", "crypto")
   switch("os", "macos")
   switch("cpu", "amd64")
 
 when defined(aarch64_macos_none):
-  switch("passC", "-target aarch64-macos-none -DnoSignalHandler")
+  switch("passC", "-target aarch64-macos-none -DnoSignalHandler -DNIM_DISABLE_DYNCALLS")
   switch("passL", "-target aarch64-macos-none")
   switch("define", "noSignalHandler")
+  switch("define", "NIM_DISABLE_DYNCALLS")
+  switch("define", "useMalloc")
+  switch("dynlibOverride", "ssl")
+  switch("dynlibOverride", "crypto")
   switch("os", "macos")
   switch("cpu", "arm64")
 
