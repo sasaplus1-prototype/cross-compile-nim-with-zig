@@ -84,4 +84,6 @@ jobs:
         with:
           name: cross_${{ matrix.target }}
       - run: chmod +x ./cross_* || true
+        shell: bash
       - run: ./cross_${{ matrix.target }} || true
+        shell: bash
