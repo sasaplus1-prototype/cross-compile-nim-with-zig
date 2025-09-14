@@ -34,7 +34,8 @@ jobs:
         with:
           nim-version: 2.2.x
           nim-install-directory: nim
-          parent-nim-install-directory: /opt
+          # parent-nim-install-directory: /opt
+          parent-nim-install-directory: ${{ runner.temp }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - run: nimble install
       - run: nimble '${{ matrix.target }}' --verbose
