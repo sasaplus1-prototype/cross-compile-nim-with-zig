@@ -5,19 +5,27 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.hostos }}
     strategy:
       fail-fast: false
       matrix:
-        target:
-          - linux_x64
-          - linux_arm64
-          - macos_x64
-          - macos_arm64
-          - windows_x64
-          - windows_arm64
-          - linux_x64_musl
-          - linux_arm64_musl
+        include:
+          - target: linux_x64
+            hostos: ubuntu-latest
+          - target: linux_arm64
+            hostos: ubuntu-latest
+          - target: macos_x64
+            hostos: macos-latest
+          - target: macos_arm64
+            hostos: macos-latest
+          - target: windows_x64
+            hostos: ubuntu-latest
+          - target: windows_arm64
+            hostos: ubuntu-latest
+          - target: linux_x64_musl
+            hostos: ubuntu-latest
+          - target: linux_arm64_musl
+            hostos: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
