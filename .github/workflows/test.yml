@@ -30,6 +30,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: mlugg/setup-zig@v2
+      # slow nim setup on macOS
+      # nim -> c : ubuntu
+      # c -> binary : zig on some OS
       - uses: jiro4989/setup-nim-action@v2
         with:
           nim-version: 2.2.x
@@ -51,3 +54,32 @@ jobs:
       - run: readelf -h './cross_${{ matrix.target }}' || true
       - run: ldd './cross_${{ matrix.target }}' || true
       - run: strings './cross_${{ matrix.target }}' | head -20 || true
+  run:
+    runs-on: ${{ matrix.hostos }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: linux_x64
+            hostos: ubuntu-latest
+          - target: linux_arm64
+            hostos: ubuntu-latest
+          - target: macos_x64
+            hostos: macos-latest
+          - target: macos_arm64
+            hostos: macos-latest
+          - target: windows_x64
+            hostos: windows-latest
+          - target: windows_arm64
+            hostos: windows-latest
+          - target: linux_x64_musl
+            hostos: ubuntu-latest
+          - target: linux_arm64_musl
+            hostos: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: cross_${{ matrix.target }}
+      - run: chmod +x ./cross_* || true
+      - run: ./cross_${{ matrix.target }} || true
