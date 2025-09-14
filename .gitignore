@@ -7,4 +7,23 @@ htmldocs/
 
 ### sasaplus1-prototype/cross-compile-nim-with-zig
 
+# binaries
 /cross
+/cross_linux_arm64
+/cross_linux_arm64_musl
+/cross_linux_x64
+/cross_linux_x64_musl
+/cross_macos_arm64
+/cross_macos_x64
+/cross_windows_arm64
+/cross_windows_x64
+
+# C directories
+/c_linux_arm64/
+/c_linux_arm64_musl/
+/c_linux_x64/
+/c_linux_x64_musl/
+/c_macos_arm64/
+/c_macos_x64/
+/c_windows_arm64/
+/c_windows_x64/

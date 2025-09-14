@@ -2,7 +2,15 @@
 
 crosscompile [Nim](https://nim-lang.org/) with [Zig](https://ziglang.org/)
 
-**incompleted**
+## Build
+
+```sh
+$ nimble build_all
+```
+
+## Notice
+
+For macOS binaries, it is recommended to build on macOS.
 
 ## License
 

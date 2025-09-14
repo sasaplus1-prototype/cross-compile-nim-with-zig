@@ -10,27 +10,18 @@ jobs:
       fail-fast: false
       matrix:
         target:
-          - x86_64_windows_gnu
-          - aarch64_windows_gnu
-          - x86_64_macos_none
-          - aarch64_macos_none
-          - x86_64_linux_gnu
-          - x86_64_linux_musl
-          - aarch64_linux_gnu
-          - aarch64_linux_musl
+          - linux_x64
+          - linux_arm64
+          - macos_x64
+          - macos_arm64
+          - windows_x64
+          - windows_arm64
+          - linux_x64_musl
+          - linux_arm64_musl
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
       - uses: mlugg/setup-zig@v2
-      - name: Install cross-compilation tools
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            gcc-mingw-w64-x86-64 \
-            gcc-mingw-w64-i686 \
-            gcc-aarch64-linux-gnu \
-            gcc-arm-linux-gnueabihf \
-            musl-tools
       - uses: jiro4989/setup-nim-action@v2
         with:
           nim-version: 2.2.x
@@ -38,17 +29,16 @@ jobs:
           parent-nim-install-directory: /opt
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - run: nimble install
-      - run: nimble build -d:${{ matrix.target }} --verbose
+      - run: nimble '${{ matrix.target }}' --verbose
       - run: ls -al
-      - run: mv ./cross ./cross-${{ matrix.target }}
       - uses: actions/upload-artifact@v4
         with:
-          name: cross-${{ matrix.target }}
-          path: ./cross-${{ matrix.target }}
-      - run: file ./cross-${{ matrix.target }}
-      - run: objdump -f ./cross-${{ matrix.target }} || true
-      - run: objdump -h ./cross-${{ matrix.target }} || true
-      - run: objdump -p ./cross-${{ matrix.target }} || true
-      - run: readelf -h ./cross-${{ matrix.target }} || true
-      - run: ldd ./cross-${{ matrix.target }} || true
-      - run: strings ./cross-${{ matrix.target }} | head -20 || true
+          name: cross_${{ matrix.target }}
+          path: cross_${{ matrix.target }}
+      - run: file './cross_${{ matrix.target }}'
+      - run: objdump -f './cross_${{ matrix.target }}' || true
+      - run: objdump -h './cross_${{ matrix.target }}' || true
+      - run: objdump -p './cross_${{ matrix.target }}' || true
+      - run: readelf -h './cross_${{ matrix.target }}' || true
+      - run: ldd './cross_${{ matrix.target }}' || true
+      - run: strings './cross_${{ matrix.target }}' | head -20 || true
